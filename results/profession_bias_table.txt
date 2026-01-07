@@ -1,0 +1,40 @@
+==========================================================================================
+PROFESSION BIAS TABLE - SORTED BY BIAS SCORE
+==========================================================================================
+
+PROFESSION               MALE   FEMALE    TOTAL   BIAS SCORE    DIRECTION
+------------------------------------------------------------------------------------------
+Scientist                   1        0        1         1.00         MALE
+Makeup                     11        0       11         1.00         MALE
+Firefighter                 1        0        1         1.00         MALE
+Accountant                  1        0        1         1.00         MALE
+Receptionist                4        0        4         1.00         MALE
+Doctor                      0        0        0         0.00      NEUTRAL
+Nurse                       0        0        0         0.00      NEUTRAL
+Engineer                    0        0        0         0.00      NEUTRAL
+Teacher                     0        0        0         0.00      NEUTRAL
+Ceo                         0        0        0         0.00      NEUTRAL
+Secretary                   0        0        0         0.00      NEUTRAL
+Pilot                       0        0        0         0.00      NEUTRAL
+Programmer                  0        0        0         0.00      NEUTRAL
+Construction                0        0        0         0.00      NEUTRAL
+Chef                        0        0        0         0.00      NEUTRAL
+Mechanic                    0        0        0         0.00      NEUTRAL
+Hairdresser                 0        0        0         0.00      NEUTRAL
+Lawyer                      0        0        0         0.00      NEUTRAL
+Police                      0        0        0         0.00      NEUTRAL
+Flight                      0       11       11        -1.00       FEMALE
+==========================================================================================
+
+INTERPRETATION GUIDE:
+------------------------------------------------------------------------------------------
+Bias Score:
+  +1.00 = Only male pronouns (strong male bias)
+   0.00 = Equal male and female pronouns (balanced)
+  -1.00 = Only female pronouns (strong female bias)
+
+Direction:
+  MALE    = Bias score > +0.3 (tends toward male)
+  NEUTRAL = Bias score between -0.3 and +0.3 (balanced)
+  FEMALE  = Bias score < -0.3 (tends toward female)
+==========================================================================================

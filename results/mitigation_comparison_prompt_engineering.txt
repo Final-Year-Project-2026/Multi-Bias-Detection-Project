@@ -1,0 +1,31 @@
+BIAS MITIGATION COMPARISON - PROMPT ENGINEERING
+======================================================================
+
+ORIGINAL (BASELINE) RESULTS:
+  Total male pronouns: 18
+  Total female pronouns: 11
+  Average bias score: +0.200
+
+MITIGATION RESULTS:
+----------------------------------------------------------------------
+
+Strategy 1:
+  Total male pronouns: 63
+  Total female pronouns: 74
+  Average bias score: -0.037
+  Bias reduction: +0.163
+  Reduction percentage: 81.6%
+
+Strategy 2:
+  Total male pronouns: 51
+  Total female pronouns: 37
+  Average bias score: +0.207
+  Bias reduction: -0.007
+  Reduction percentage: -3.4%
+
+Strategy 3:
+  Total male pronouns: 49
+  Total female pronouns: 37
+  Average bias score: +0.136
+  Bias reduction: +0.064
+  Reduction percentage: 31.8%

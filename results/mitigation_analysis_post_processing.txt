@@ -1,0 +1,57 @@
+POST-PROCESSING MITIGATION ANALYSIS
+======================================================================
+
+Replace with They/Them:
+----------------------------------------------------------------------
+ORIGINAL STATISTICS:
+  Male pronouns: 18
+  Female pronouns: 11
+  Bias score: +0.241
+
+DEBIASED STATISTICS:
+  Male pronouns: 0
+  Female pronouns: 0
+  Bias score: +0.000
+
+IMPROVEMENT:
+  Bias reduction: +0.241
+  Reduction percentage: 100.0%
+
+======================================================================
+
+Remove Pronouns:
+----------------------------------------------------------------------
+ORIGINAL STATISTICS:
+  Male pronouns: 18
+  Female pronouns: 11
+  Bias score: +0.241
+
+DEBIASED STATISTICS:
+  Male pronouns: 0
+  Female pronouns: 0
+  Bias score: +0.000
+
+IMPROVEMENT:
+  Bias reduction: +0.241
+  Reduction percentage: 100.0%
+
+======================================================================
+
+Alternating Gender:
+----------------------------------------------------------------------
+ORIGINAL STATISTICS:
+  Male pronouns: 18
+  Female pronouns: 11
+  Bias score: +0.241
+
+DEBIASED STATISTICS:
+  Male pronouns: 2
+  Female pronouns: 27
+  Bias score: -0.862
+
+IMPROVEMENT:
+  Bias reduction: -0.621
+  Reduction percentage: -257.1%
+
+======================================================================
+

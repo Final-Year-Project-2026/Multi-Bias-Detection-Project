@@ -1,0 +1,11 @@
+BIAS ANALYSIS SUMMARY
+======================================================================
+
+Total texts analyzed: 20
+Total male pronouns: 18
+Total female pronouns: 11
+Average bias score: +0.200
+
+Texts with male bias: 5
+Texts with female bias: 1
+Neutral texts: 14
