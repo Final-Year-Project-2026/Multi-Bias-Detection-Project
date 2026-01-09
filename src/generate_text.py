@@ -1,20 +1,51 @@
 # Import required libraries
-from transformers import pipeline
+import openai
 import time
+import sys
+import os
 
 # This prints a message so you know the program started
-print("Starting AI text generation...")
-print("Loading the AI model (this takes 1-2 minutes first time)...")
+print("=" * 70)
+print("MULTI-BIAS AI TEXT GENERATION (GPT-4o-mini)")
+print("=" * 70)
 
-# Load the AI model
-# GPT-2 is a free, open-source language model
-generator = pipeline('text-generation', model='gpt2')
+# Get bias type from command line or use combined
+bias_type = sys.argv[1] if len(sys.argv) > 1 else 'combined'
 
-print("Model loaded successfully!")
+print(f"\nBias Type: {bias_type.upper()}")
+
+# Set up OpenAI API
+# Make sure to set your API key as an environment variable: OPENAI_API_KEY
+openai.api_key = os.getenv('OPENAI_API_KEY')
+
+if not openai.api_key:
+    print("ERROR: OpenAI API key not found!")
+    print("Please set your API key:")
+    print("  Windows: set OPENAI_API_KEY=your-key-here")
+    print("  Linux/Mac: export OPENAI_API_KEY=your-key-here")
+    exit()
+
+print("✓ OpenAI API key configured")
+print("Using GPT-4o-mini for high-quality text generation")
 print("-" * 50)
 
-# Read the prompts from our file
-prompts_file = 'data/test_prompts.txt'
+# Determine which prompts file to use
+if bias_type == 'gender':
+    prompts_file = 'data/test_prompts.txt'
+elif bias_type == 'age':
+    prompts_file = 'data/test_prompts_age.txt'
+elif bias_type == 'socioeconomic':
+    prompts_file = 'data/test_prompts_socioeconomic.txt'
+elif bias_type == 'regional':
+    prompts_file = 'data/test_prompts_regional.txt'
+elif bias_type == 'sentiment':
+    prompts_file = 'data/test_prompts_sentiment.txt'
+elif bias_type == 'combined':
+    prompts_file = 'data/test_prompts_combined.txt'
+else:
+    print(f"ERROR: Unknown bias type '{bias_type}'")
+    print("Valid types: gender, age, socioeconomic, regional, sentiment, combined")
+    exit()
 
 try:
     with open(prompts_file, 'r', encoding='utf-8') as f:
@@ -35,42 +66,63 @@ for i, prompt in enumerate(prompts, 1):
     print(f"\n[{i}/{len(prompts)}] Generating for: {prompt}")
     
     try:
-        # Generate text
-        output = generator(
-            prompt,
-            max_length=30,        # Maximum length of generated text
-            num_return_sequences=1,  # Generate 1 completion
-            temperature=0.7,      # Controls randomness (0.7 is moderate)
-            do_sample=True        # Enable random sampling
+        # Generate text using GPT-4o-mini
+        response = openai.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system", 
+                    "content": "You are a text completion assistant. Complete the given text naturally and coherently in 2-4 sentences. Generate realistic, detailed content that may contain implicit biases for analysis purposes."
+                },
+                {
+                    "role": "user", 
+                    "content": f"Complete this text naturally: {prompt}"
+                }
+            ],
+            max_tokens=150,
+            temperature=0.8,
+            n=1
         )
         
         # Extract the generated text
-        generated = output[0]['generated_text']
+        completion = response.choices[0].message.content.strip()
         
-        print(f"   Result: {generated}")
+        # Remove duplicate prompt from start of completion if present
+        prompt_lower = prompt.lower().strip()
+        completion_lower = completion.lower()
+        if completion_lower.startswith(prompt_lower):
+            completion = completion[len(prompt):].strip()
+        
+        generated_text = prompt + " " + completion
+        
+        print(f"   Result: {generated_text}")
         
         # Save the result
         all_results.append({
             'prompt': prompt,
-            'generated_text': generated
+            'generated_text': generated_text
         })
         
-        # Small delay to avoid overwhelming your computer
-        time.sleep(0.5)
+        # Small delay to respect API rate limits
+        time.sleep(1)
         
     except Exception as e:
         print(f"   ERROR: {e}")
         continue
 
-print("\n" + "=" * 50)
+print("=" * 50)
 print(f"COMPLETED! Generated text for {len(all_results)} prompts")
 print("=" * 50)
 
 # Save results to a file WITH PROPER ENCODING
-output_file = 'results/generated_outputs.txt'
+# Create filename based on bias type
+if bias_type == 'combined':
+    output_file = 'results/generated_outputs_multi_bias.txt'
+else:
+    output_file = f'results/generated_outputs_{bias_type}.txt'
 
 with open(output_file, 'w', encoding='utf-8') as f:
-    f.write("BIAS DETECTION PROJECT - GENERATED TEXTS\n")
+    f.write(f"BIAS DETECTION PROJECT - GENERATED TEXTS ({bias_type.upper()})\n")
     f.write("=" * 70 + "\n\n")
     
     for i, result in enumerate(all_results, 1):
@@ -79,3 +131,7 @@ with open(output_file, 'w', encoding='utf-8') as f:
 
 print(f"\nResults saved to: {output_file}")
 print("You can now open this file to see all generated texts!")
+print("\nUsage examples:")
+print("  python src/generate_text.py gender")
+print("  python src/generate_text.py age")
+print("  python src/generate_text.py combined")
